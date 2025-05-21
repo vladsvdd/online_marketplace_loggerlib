@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/google/uuid"
+	"github.com/vladsvdd/online_marketplace_loggerlib"
 	"log/slog"
-	"loggerlib"
 	"os"
 	"path/filepath"
 	"time"
@@ -18,13 +18,13 @@ type Logger struct {
 }
 
 // Implement loggerlib.Logger
-func (s *Logger) With(args ...any) loggerlib.Logger {
+func (s *Logger) With(args ...any) online_marketplace_loggerlib.Logger {
 	return &Logger{
 		l: s.l.With(args...),
 	}
 }
 
-func (s *Logger) WithContext(ctx context.Context) loggerlib.Logger {
+func (s *Logger) WithContext(ctx context.Context) online_marketplace_loggerlib.Logger {
 	rc := s.GetRequestContext(ctx)
 	if rc == nil {
 		return s
@@ -73,7 +73,7 @@ func (h *TraceHandler) Handle(ctx context.Context, r slog.Record) error {
 	return h.Handler.Handle(ctx, r)
 }
 
-func MakeLogger(filePath string) (loggerlib.Logger, error) {
+func MakeLogger(filePath string) (online_marketplace_loggerlib.Logger, error) {
 	if filePath == "" {
 		filePath = LogFilePath
 	}

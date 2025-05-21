@@ -1,4 +1,4 @@
-package loggerlib
+package online_marketplace_loggerlib
 
 import "time"
 

@@ -1,3 +1,4 @@
+// Package logger logger/formate_error.go
 package logger
 
 import (

@@ -1,3 +1,4 @@
+// Package logger logger/logger.go
 package logger
 
 import (

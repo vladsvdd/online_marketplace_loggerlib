@@ -11,7 +11,7 @@ import (
 )
 
 func (s *Logger) With(args ...any) *Logger {
-	return &logger{
+	return &Logger{
 		l: s.l.With(args...),
 	}
 }

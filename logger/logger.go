@@ -89,41 +89,120 @@ func (s *Logger) Close() error {
 	return nil
 }
 
-func getLevel(l slog.Leveler) slog.Level {
-	if level, ok := l.(slog.Level); ok {
-		return level
-	}
-	return l.Level()
+type LogFormat string
+
+const (
+	FormatJSON LogFormat = "json"
+	FormatText LogFormat = "text"
+)
+
+type Config struct {
+	FilePath string
+	IsDebug  bool
+	Format   LogFormat
 }
 
-func MakeLogger(filePath string, isDebug bool) (*Logger, error) {
-	if filePath == "" {
-		filePath = LogFilePath
-	}
+// Option Вариативные параметры через ...Option (Go-идиоматично)
+// Это гибкий и расширяемый способ, который часто используется в библиотеках.
+type Option func(*Config)
 
-	err := os.MkdirAll(filepath.Dir(filePath), os.ModePerm)
+func WithFilePath(path string) Option {
+	return func(cfg *Config) {
+		cfg.FilePath = path
+	}
+}
+
+func WithDebugMode(debug bool) Option {
+	return func(cfg *Config) {
+		cfg.IsDebug = debug
+	}
+}
+
+func WithFormat(fmt LogFormat) Option {
+	return func(cfg *Config) {
+		cfg.Format = fmt
+	}
+}
+
+func MakeLogger(opts ...Option) (*Logger, error) {
+	cfg := Config{
+		FilePath: LogFilePath,
+		IsDebug:  false,
+		Format:   FormatJSON,
+	}
+	for _, o := range opts {
+		o(&cfg)
+	}
+	return buildLogger(cfg)
+}
+
+// Builder pattern
+type Builder struct {
+	cfg Config
+}
+
+func NewLoggerBuilder() *Builder {
+	return &Builder{
+		cfg: Config{
+			FilePath: LogFilePath,
+			IsDebug:  false,
+			Format:   FormatJSON,
+		},
+	}
+}
+
+func (b *Builder) WithFilePath(path string) *Builder {
+	b.cfg.FilePath = path
+	return b
+}
+
+func (b *Builder) WithDebugMode(debug bool) *Builder {
+	b.cfg.IsDebug = debug
+	return b
+}
+
+func (b *Builder) WithFormat(fmt LogFormat) *Builder {
+	b.cfg.Format = fmt
+	return b
+}
+
+func (b *Builder) Build() (*Logger, error) {
+	return buildLogger(b.cfg)
+}
+
+func buildLogger(cfg Config) (*Logger, error) {
+	err := os.MkdirAll(filepath.Dir(cfg.FilePath), os.ModePerm)
 	if err != nil {
 		return nil, fmt.Errorf("не удалось создать директорию логов: %v", err)
 	}
 
-	file, err := os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, os.FileMode(0644))
+	file, err := os.OpenFile(cfg.FilePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return nil, fmt.Errorf("не удалось открыть файл логов: %v", err)
 	}
 
-	opts := &slog.HandlerOptions{
+	handlerOpts := &slog.HandlerOptions{
 		ReplaceAttr: replaceAttr,
 		Level:       slog.LevelInfo,
 	}
-	if isDebug {
-		opts.Level = slog.LevelDebug
+
+	if cfg.IsDebug {
+		handlerOpts.Level = slog.LevelDebug
 	}
 
-	handler := slog.NewJSONHandler(file, opts)
+	var baseHandler slog.Handler
+	switch cfg.Format {
+	case FormatText:
+		baseHandler = slog.NewTextHandler(file, handlerOpts)
+	case FormatJSON:
+		fallthrough
+	default:
+		baseHandler = slog.NewJSONHandler(file, handlerOpts)
+	}
 
 	th := &traceHandler{
-		Handler: handler,
-		level:   getLevel(opts.Level),
+		Handler: baseHandler,
+		level:   handlerOpts.Level.Level(),
 	}
 
 	return &Logger{

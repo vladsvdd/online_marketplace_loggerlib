@@ -11,7 +11,11 @@ import (
 func TestLogger_Infof(t *testing.T) {
 	tmpFile := "./test_log_info.log"
 
-	log, err := MakeLogger(tmpFile, false)
+	log, err := MakeLogger(
+		WithFilePath(tmpFile),
+		WithDebugMode(false),
+		WithFormat(FormatJSON),
+	)
 	if err != nil {
 		t.Fatalf("MakeLogger failed: %v", err)
 	}
@@ -39,7 +43,7 @@ func TestLogger_Infof(t *testing.T) {
 func TestLogger_Warningf(t *testing.T) {
 	tmpFile := "./test_log_warning.log"
 
-	log, err := MakeLogger(tmpFile, false)
+	log, err := NewLoggerBuilder().WithFilePath(tmpFile).WithDebugMode(false).Build()
 	if err != nil {
 		t.Fatalf("MakeLogger failed: %v", err)
 	}
@@ -67,7 +71,10 @@ func TestLogger_Warningf(t *testing.T) {
 func TestLogger_Errorf(t *testing.T) {
 	tmpFile := "./test_log_error.log"
 
-	log, err := MakeLogger(tmpFile, false)
+	log, err := MakeLogger(
+		WithFilePath(tmpFile),
+		WithDebugMode(false),
+	)
 	if err != nil {
 		t.Fatalf("MakeLogger failed: %v", err)
 	}
@@ -95,7 +102,10 @@ func TestLogger_Errorf(t *testing.T) {
 func TestLogger_Debugf(t *testing.T) {
 	tmpFile := "./test_log_debug.log"
 
-	log, err := MakeLogger(tmpFile, true)
+	log, err := MakeLogger(
+		WithFilePath(tmpFile),
+		WithDebugMode(true),
+	)
 	if err != nil {
 		t.Fatalf("MakeLogger failed: %v", err)
 	}
@@ -123,7 +133,10 @@ func TestLogger_Debugf(t *testing.T) {
 func TestLogger_With(t *testing.T) {
 	tmpFile := "./test_log_with.log"
 
-	log, err := MakeLogger(tmpFile, false)
+	log, err := MakeLogger(
+		WithFilePath(tmpFile),
+		WithDebugMode(false),
+	)
 	if err != nil {
 		t.Fatalf("MakeLogger failed: %v", err)
 	}
@@ -155,7 +168,10 @@ func TestLogger_With(t *testing.T) {
 func TestLogger_WithContext(t *testing.T) {
 	tmpFile := "./test_log_ctx.log"
 
-	log, err := MakeLogger(tmpFile, false)
+	log, err := MakeLogger(
+		WithFilePath(tmpFile),
+		WithDebugMode(false),
+	)
 	if err != nil {
 		t.Fatalf("MakeLogger failed: %v", err)
 	}

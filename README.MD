@@ -1,5 +1,19 @@
 Реализация логера
 
+types.go - Основные типы и константы
+
+options.go - Функциональные опции
+
+builder.go - Builder паттерн
+
+context.go - Работа с контекстом
+
+handler.go - Кастомный обработчик логов
+
+formate_error.go - Форматирование ошибок
+
+logger.go - Основная реализация логгера
+
 Example interface
 ```
 type Logger interface {
@@ -14,21 +28,23 @@ type Logger interface {
 }
 ```
 
-
-Создание логгера с поддержкой подходов — через опции (`Option`), и через билдер (`LoggerBuilder`)
-Оба подхода создают один и тот же объект `Logger`, используя общую функцию `buildLogger`.
-### Через опции:
+### Пример использования:
 ```
-log, err := MakeLogger(
-    WithFilePath("./tmp/log.json"),
-    WithDebugMode(true),
+logger, err := logger.MakeLogger(
+	logger.WithFilePath("./custom.log"),
+	logger.WithDebugMode(true),
 )
-```
+if err != nil {
+	panic(err)
+}
+defer logger.Close()
 
-### Через билдер:
-```
-log, err := NewLoggerBuilder().
-    WithFilePath("./tmp/log.json").
-    WithDebugMode(true).
-    Build()
+ctx := logger.NewRequestContext(context.Background(), &logger.RequestContext{
+	TraceID:   "trace-123",
+	RequestID: "req-456",
+	UserID:    "user-789",
+	StartedAt: time.Now(),
+})
+
+logger.Infof(ctx, "Processing request", "order_id", 123)
 ```

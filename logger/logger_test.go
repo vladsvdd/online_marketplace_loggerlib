@@ -9,20 +9,26 @@ import (
 )
 
 func TestLogger_Infof(t *testing.T) {
-	tmpFile := "./test_log_info.log"
+	tmpFile := "./logs/test_log_info.log"
 
-	log, err := MakeLogger(
+	log, err := NewLogger(
 		WithFilePath(tmpFile),
 		WithDebugMode(false),
 		WithFormat(FormatJSON),
 	)
 	if err != nil {
-		t.Fatalf("MakeLogger failed: %v", err)
+		t.Fatalf("NewLogger failed: %v", err)
 	}
 
 	defer func() {
-		log.Close()
-		os.Remove(tmpFile)
+		err := log.Close()
+		if err != nil {
+			return
+		}
+		err = os.Remove(tmpFile)
+		if err != nil {
+			return
+		}
 	}()
 
 	traceID := "test-trace"
@@ -41,16 +47,22 @@ func TestLogger_Infof(t *testing.T) {
 }
 
 func TestLogger_Warningf(t *testing.T) {
-	tmpFile := "./test_log_warning.log"
+	tmpFile := "./logs/test_log_warning.log"
 
 	log, err := NewLoggerBuilder().WithFilePath(tmpFile).WithDebugMode(false).Build()
 	if err != nil {
-		t.Fatalf("MakeLogger failed: %v", err)
+		t.Fatalf("NewLogger failed: %v", err)
 	}
 
 	defer func() {
-		log.Close()
-		os.Remove(tmpFile)
+		err := log.Close()
+		if err != nil {
+			return
+		}
+		err = os.Remove(tmpFile)
+		if err != nil {
+			return
+		}
 	}()
 
 	traceID := "warn-trace"
@@ -69,19 +81,25 @@ func TestLogger_Warningf(t *testing.T) {
 }
 
 func TestLogger_Errorf(t *testing.T) {
-	tmpFile := "./test_log_error.log"
+	tmpFile := "./logs/test_log_error.log"
 
-	log, err := MakeLogger(
+	log, err := NewLogger(
 		WithFilePath(tmpFile),
 		WithDebugMode(false),
 	)
 	if err != nil {
-		t.Fatalf("MakeLogger failed: %v", err)
+		t.Fatalf("NewLogger failed: %v", err)
 	}
 
 	defer func() {
-		log.Close()
-		os.Remove(tmpFile)
+		err := log.Close()
+		if err != nil {
+			return
+		}
+		err = os.Remove(tmpFile)
+		if err != nil {
+			return
+		}
 	}()
 
 	traceID := "error-trace"
@@ -100,19 +118,25 @@ func TestLogger_Errorf(t *testing.T) {
 }
 
 func TestLogger_Debugf(t *testing.T) {
-	tmpFile := "./test_log_debug.log"
+	tmpFile := "./logs/test_log_debug.log"
 
-	log, err := MakeLogger(
+	log, err := NewLogger(
 		WithFilePath(tmpFile),
 		WithDebugMode(true),
 	)
 	if err != nil {
-		t.Fatalf("MakeLogger failed: %v", err)
+		t.Fatalf("NewLogger failed: %v", err)
 	}
 
 	defer func() {
-		log.Close()
-		os.Remove(tmpFile)
+		err := log.Close()
+		if err != nil {
+			return
+		}
+		err = os.Remove(tmpFile)
+		if err != nil {
+			return
+		}
 	}()
 
 	traceID := "debug-trace"
@@ -131,19 +155,25 @@ func TestLogger_Debugf(t *testing.T) {
 }
 
 func TestLogger_With(t *testing.T) {
-	tmpFile := "./test_log_with.log"
+	tmpFile := "./logs/test_log_with.log"
 
-	log, err := MakeLogger(
+	log, err := NewLogger(
 		WithFilePath(tmpFile),
 		WithDebugMode(false),
 	)
 	if err != nil {
-		t.Fatalf("MakeLogger failed: %v", err)
+		t.Fatalf("NewLogger failed: %v", err)
 	}
 
 	defer func() {
-		log.Close()
-		os.Remove(tmpFile)
+		err := log.Close()
+		if err != nil {
+			return
+		}
+		err = os.Remove(tmpFile)
+		if err != nil {
+			return
+		}
 	}()
 
 	log2 := log.With("foo", "bar")
@@ -166,19 +196,25 @@ func TestLogger_With(t *testing.T) {
 }
 
 func TestLogger_WithContext(t *testing.T) {
-	tmpFile := "./test_log_ctx.log"
+	tmpFile := "./logs/test_log_ctx.log"
 
-	log, err := MakeLogger(
+	log, err := NewLogger(
 		WithFilePath(tmpFile),
 		WithDebugMode(false),
 	)
 	if err != nil {
-		t.Fatalf("MakeLogger failed: %v", err)
+		t.Fatalf("NewLogger failed: %v", err)
 	}
 
 	defer func() {
-		log.Close()
-		os.Remove(tmpFile)
+		err := log.Close()
+		if err != nil {
+			return
+		}
+		err = os.Remove(tmpFile)
+		if err != nil {
+			return
+		}
 	}()
 
 	ctx := context.Background()

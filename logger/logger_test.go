@@ -1,0 +1,196 @@
+package logger
+
+import (
+	"context"
+	"os"
+	"strings"
+	"testing"
+	"time"
+)
+
+func TestLogger_Infof(t *testing.T) {
+	tmpFile := "./test_log_info.log"
+
+	log, err := MakeLogger(tmpFile, false)
+	if err != nil {
+		t.Fatalf("MakeLogger failed: %v", err)
+	}
+
+	defer func() {
+		log.Close()
+		os.Remove(tmpFile)
+	}()
+
+	traceID := "test-trace"
+	log.Infof(traceID, "Test message: %s", "info")
+
+	time.Sleep(50 * time.Millisecond) // дать время на запись
+
+	content, err := os.ReadFile(tmpFile)
+	if err != nil {
+		t.Fatalf("failed to read log file: %v", err)
+	}
+
+	if !strings.Contains(string(content), "Test message") {
+		t.Error("Log file does not contain expected message")
+	}
+}
+
+func TestLogger_Warningf(t *testing.T) {
+	tmpFile := "./test_log_warning.log"
+
+	log, err := MakeLogger(tmpFile, false)
+	if err != nil {
+		t.Fatalf("MakeLogger failed: %v", err)
+	}
+
+	defer func() {
+		log.Close()
+		os.Remove(tmpFile)
+	}()
+
+	traceID := "warn-trace"
+	log.Warningf(traceID, "Warning message: %s", "warn")
+
+	time.Sleep(50 * time.Millisecond)
+
+	content, err := os.ReadFile(tmpFile)
+	if err != nil {
+		t.Fatalf("failed to read log file: %v", err)
+	}
+
+	if !strings.Contains(string(content), "Warning message") {
+		t.Error("Log file does not contain expected warning message")
+	}
+}
+
+func TestLogger_Errorf(t *testing.T) {
+	tmpFile := "./test_log_error.log"
+
+	log, err := MakeLogger(tmpFile, false)
+	if err != nil {
+		t.Fatalf("MakeLogger failed: %v", err)
+	}
+
+	defer func() {
+		log.Close()
+		os.Remove(tmpFile)
+	}()
+
+	traceID := "error-trace"
+	log.Errorf(traceID, "Error message: %s", "error")
+
+	time.Sleep(50 * time.Millisecond)
+
+	content, err := os.ReadFile(tmpFile)
+	if err != nil {
+		t.Fatalf("failed to read log file: %v", err)
+	}
+
+	if !strings.Contains(string(content), "Error message") {
+		t.Error("Log file does not contain expected error message")
+	}
+}
+
+func TestLogger_Debugf(t *testing.T) {
+	tmpFile := "./test_log_debug.log"
+
+	log, err := MakeLogger(tmpFile, true)
+	if err != nil {
+		t.Fatalf("MakeLogger failed: %v", err)
+	}
+
+	defer func() {
+		log.Close()
+		os.Remove(tmpFile)
+	}()
+
+	traceID := "debug-trace"
+	log.Debugf(traceID, "Debug message: %s", "debug")
+
+	time.Sleep(50 * time.Millisecond)
+
+	content, err := os.ReadFile(tmpFile)
+	if err != nil {
+		t.Fatalf("failed to read log file: %v", err)
+	}
+
+	if !strings.Contains(string(content), "Debug message") {
+		t.Error("Log file does not contain expected debug message")
+	}
+}
+
+func TestLogger_With(t *testing.T) {
+	tmpFile := "./test_log_with.log"
+
+	log, err := MakeLogger(tmpFile, false)
+	if err != nil {
+		t.Fatalf("MakeLogger failed: %v", err)
+	}
+
+	defer func() {
+		log.Close()
+		os.Remove(tmpFile)
+	}()
+
+	log2 := log.With("foo", "bar")
+	if log2 == nil {
+		t.Fatal("With returned nil logger")
+	}
+
+	log2.Infof("trace", "message with context")
+
+	time.Sleep(50 * time.Millisecond)
+
+	content, err := os.ReadFile(tmpFile)
+	if err != nil {
+		t.Fatalf("failed to read log file: %v", err)
+	}
+
+	if !strings.Contains(string(content), "foo") {
+		t.Error("Expected field 'foo' not found in log output")
+	}
+}
+
+func TestLogger_WithContext(t *testing.T) {
+	tmpFile := "./test_log_ctx.log"
+
+	log, err := MakeLogger(tmpFile, false)
+	if err != nil {
+		t.Fatalf("MakeLogger failed: %v", err)
+	}
+
+	defer func() {
+		log.Close()
+		os.Remove(tmpFile)
+	}()
+
+	ctx := context.Background()
+	rc := &RequestContext{
+		TraceID:   "ctx-trace",
+		UserID:    "user-123",
+		RequestID: "req-456",
+		StartedAt: time.Now().Add(-1 * time.Second),
+	}
+
+	ctx = log.NewRequestContext(ctx, rc)
+	log2 := log.WithContext(ctx)
+
+	log2.Infof(rc.TraceID, "contextual log")
+
+	time.Sleep(50 * time.Millisecond)
+
+	content, err := os.ReadFile(tmpFile)
+	if err != nil {
+		t.Fatalf("failed to read log file: %v", err)
+	}
+
+	data := string(content)
+	if !strings.Contains(data, "ctx-trace") ||
+		!strings.Contains(data, "user-123") ||
+		!strings.Contains(data, "req-456") ||
+		!strings.Contains(data, "startedAt") ||
+		!strings.Contains(data, "duration") {
+		t.Error("Expected context fields not found in log output")
+	}
+}

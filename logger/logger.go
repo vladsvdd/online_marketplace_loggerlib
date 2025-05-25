@@ -5,7 +5,6 @@ import (
 	"context"
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/vladsvdd/online_marketplace_loggerlib"
 	"log/slog"
 	"os"
 	"path/filepath"
@@ -15,25 +14,29 @@ import (
 const LogFilePath = "./logs/log.log"
 
 type Logger struct {
-	l *slog.Logger
+	l    *slog.Logger
+	file *os.File
 }
 
-// Implement loggerlib.Logger
-func (s *Logger) With(args ...any) online_marketplace_loggerlib.Logger {
+func (s *Logger) With(args ...any) *Logger {
 	return &Logger{
 		l: s.l.With(args...),
 	}
 }
 
-func (s *Logger) WithContext(ctx context.Context) online_marketplace_loggerlib.Logger {
+func (s *Logger) WithContext(ctx context.Context) *Logger {
 	rc := s.GetRequestContext(ctx)
 	if rc == nil {
 		return s
 	}
 
 	attrs := []any{
-		"traceID", rc.TraceID,
 		"userID", rc.UserID,
+		"requestId", rc.RequestID,
+	}
+
+	if rc.TraceID != "" {
+		attrs = append(attrs, "traceID", rc.TraceID)
 	}
 
 	if !rc.StartedAt.IsZero() {
@@ -64,17 +67,36 @@ func (s *Logger) Debugf(traceID, message string, args ...interface{}) {
 	s.l.With("traceID", traceID).Debug(message, args...)
 }
 
-type TraceHandler struct {
+type traceHandler struct {
 	slog.Handler
+	level slog.Level
 }
 
-func (h *TraceHandler) Handle(ctx context.Context, r slog.Record) error {
+func (h *traceHandler) Enabled(ctx context.Context, level slog.Level) bool {
+	return level >= h.level
+}
+
+func (h *traceHandler) Handle(ctx context.Context, r slog.Record) error {
 	logID := uuid.NewString()
 	r.AddAttrs(slog.String("logID", logID))
 	return h.Handler.Handle(ctx, r)
 }
 
-func MakeLogger(filePath string) (online_marketplace_loggerlib.Logger, error) {
+func (s *Logger) Close() error {
+	if s.file != nil {
+		return s.file.Close()
+	}
+	return nil
+}
+
+func getLevel(l slog.Leveler) slog.Level {
+	if level, ok := l.(slog.Level); ok {
+		return level
+	}
+	return l.Level()
+}
+
+func MakeLogger(filePath string, isDebug bool) (*Logger, error) {
 	if filePath == "" {
 		filePath = LogFilePath
 	}
@@ -89,10 +111,23 @@ func MakeLogger(filePath string) (online_marketplace_loggerlib.Logger, error) {
 		return nil, fmt.Errorf("не удалось открыть файл логов: %v", err)
 	}
 
-	handler := slog.NewJSONHandler(file, &slog.HandlerOptions{ReplaceAttr: replaceAttr})
-	traceHandler := &TraceHandler{Handler: handler}
+	opts := &slog.HandlerOptions{
+		ReplaceAttr: replaceAttr,
+		Level:       slog.LevelInfo,
+	}
+	if isDebug {
+		opts.Level = slog.LevelDebug
+	}
+
+	handler := slog.NewJSONHandler(file, opts)
+
+	th := &traceHandler{
+		Handler: handler,
+		level:   getLevel(opts.Level),
+	}
 
 	return &Logger{
-		l: slog.New(traceHandler),
+		l:    slog.New(th),
+		file: file,
 	}, nil
 }

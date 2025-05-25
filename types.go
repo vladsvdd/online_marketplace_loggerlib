@@ -29,7 +29,9 @@ type Config struct {
 	Format   LogFormat
 }
 
-type Logger struct {
+type Logger = logger
+
+type logger struct {
 	l    *slog.Logger
 	file *os.File
 }

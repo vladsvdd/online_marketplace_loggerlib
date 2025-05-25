@@ -1,5 +1,5 @@
 // logger/handler.go
-package logger
+package online_marketplace_loggerlib
 
 import (
 	"context"

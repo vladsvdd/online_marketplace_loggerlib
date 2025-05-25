@@ -1,5 +1,5 @@
-// Package logger logger/options.go
-package logger
+// Package online_marketplace_loggerlib logger/options.go
+package online_marketplace_loggerlib
 
 // Option Вариативные параметры через ...Option (Go-идиоматично)
 // Это гибкий и расширяемый способ, который часто используется в библиотеках.

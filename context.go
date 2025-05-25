@@ -1,5 +1,5 @@
-// Package logger logger/context.go
-package logger
+// Package online_marketplace_loggerlib logger/context.go
+package online_marketplace_loggerlib
 
 import (
 	"context"

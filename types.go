@@ -1,5 +1,5 @@
-// Package logger logger/types.go
-package logger
+// Package online_marketplace_loggerlib logger/types.go
+package online_marketplace_loggerlib
 
 import (
 	"log/slog"

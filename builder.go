@@ -1,5 +1,5 @@
-// Package logger logger/builder.go
-package logger
+// Package online_marketplace_loggerlib logger/builder.go
+package online_marketplace_loggerlib
 
 // Builder pattern
 type Builder struct {

@@ -1,5 +1,5 @@
-// Package logger logger/formate_error.go
-package logger
+// Package online_marketplace_loggerlib logger/formate_error.go
+package online_marketplace_loggerlib
 
 import (
 	"github.com/mdobak/go-xerrors"

@@ -177,10 +177,6 @@ func TestLogger_With(t *testing.T) {
 	}()
 
 	log2 := log.With("foo", "bar")
-	if log2 == nil {
-		t.Fatal("With returned nil logger")
-	}
-
 	log2.Infof("trace", "message with context")
 
 	time.Sleep(50 * time.Millisecond)

@@ -1,4 +1,4 @@
-// Package online_marketplace_loggerlib request_context.go
+// Package logger request_context.go
 package logger
 
 import "time"

@@ -72,7 +72,7 @@ type traceHandler struct {
 	level slog.Level
 }
 
-func (h *traceHandler) Enabled(ctx context.Context, level slog.Level) bool {
+func (h *traceHandler) Enabled(_ context.Context, level slog.Level) bool {
 	return level >= h.level
 }
 

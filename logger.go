@@ -10,16 +10,16 @@ import (
 	"time"
 )
 
-func (s *Logger) With(args ...any) Logger {
-	return Logger{
+func (s *Logger) With(args ...any) *Logger {
+	return &Logger{
 		l: s.l.With(args...),
 	}
 }
 
-func (s *Logger) WithContext(ctx context.Context) Logger {
+func (s *Logger) WithContext(ctx context.Context) *Logger {
 	rc := s.GetRequestContext(ctx)
 	if rc == nil {
-		return *s
+		return s
 	}
 
 	attrs := []any{

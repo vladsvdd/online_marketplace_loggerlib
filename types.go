@@ -20,6 +20,10 @@ type RequestContext struct {
 	TraceID   string
 	RequestID string
 	UserID    string
+	Method    string
+	Path      string
+	Status    int
+	Ip        string
 	StartedAt time.Time
 }
 

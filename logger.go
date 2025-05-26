@@ -43,19 +43,19 @@ func (s *Logger) WithContext(ctx context.Context) *Logger {
 	return s.With(attrs...)
 }
 
-func (s *Logger) Infof(traceID, message string, args ...interface{}) {
+func (s *Logger) Info(traceID, message string, args ...interface{}) {
 	s.l.With("traceID", traceID).Info(message, args...)
 }
 
-func (s *Logger) Warningf(traceID, message string, args ...interface{}) {
+func (s *Logger) Warning(traceID, message string, args ...interface{}) {
 	s.l.With("traceID", traceID).Warn(message, args...)
 }
 
-func (s *Logger) Errorf(traceID, message string, args ...interface{}) {
+func (s *Logger) Error(traceID, message string, args ...interface{}) {
 	s.l.With("traceID", traceID).Error(message, args...)
 }
 
-func (s *Logger) Debugf(traceID, message string, args ...interface{}) {
+func (s *Logger) Debug(traceID, message string, args ...interface{}) {
 	s.l.With("traceID", traceID).Debug(message, args...)
 }
 

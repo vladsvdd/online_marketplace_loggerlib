@@ -40,19 +40,19 @@ func (s *Logger) WithContext(ctx context.Context) *Logger {
 	return s.With(attrs...)
 }
 
-func (s *Logger) InfoCtx(ctx context.Context, msg string, args ...any) {
+func (s *Logger) Info(ctx context.Context, msg string, args ...any) {
 	s.WithContext(ctx).l.Info(msg, args...)
 }
 
-func (s *Logger) ErrorCtx(ctx context.Context, msg string, args ...any) {
+func (s *Logger) Error(ctx context.Context, msg string, args ...any) {
 	s.WithContext(ctx).l.Error(msg, args...)
 }
 
-func (s *Logger) DebugCtx(ctx context.Context, msg string, args ...any) {
+func (s *Logger) Debug(ctx context.Context, msg string, args ...any) {
 	s.WithContext(ctx).l.Debug(msg, args...)
 }
 
-func (s *Logger) WarnCtx(ctx context.Context, msg string, args ...any) {
+func (s *Logger) Warn(ctx context.Context, msg string, args ...any) {
 	s.WithContext(ctx).l.Warn(msg, args...)
 }
 

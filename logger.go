@@ -25,10 +25,7 @@ func (s *Logger) WithContext(ctx context.Context) *Logger {
 	attrs := []any{
 		"userID", rc.UserID,
 		"requestId", rc.RequestID,
-	}
-
-	if rc.TraceID != "" {
-		attrs = append(attrs, "traceID", rc.TraceID)
+		"traceID", rc.TraceID,
 	}
 
 	if !rc.StartedAt.IsZero() {
@@ -43,20 +40,20 @@ func (s *Logger) WithContext(ctx context.Context) *Logger {
 	return s.With(attrs...)
 }
 
-func (s *Logger) Info(traceID, message string, args ...interface{}) {
-	s.l.With("traceID", traceID).Info(message, args...)
+func (s *Logger) InfoCtx(ctx context.Context, msg string, args ...any) {
+	s.WithContext(ctx).l.Info(msg, args...)
 }
 
-func (s *Logger) Warning(traceID, message string, args ...interface{}) {
-	s.l.With("traceID", traceID).Warn(message, args...)
+func (s *Logger) ErrorCtx(ctx context.Context, msg string, args ...any) {
+	s.WithContext(ctx).l.Error(msg, args...)
 }
 
-func (s *Logger) Error(traceID, message string, args ...interface{}) {
-	s.l.With("traceID", traceID).Error(message, args...)
+func (s *Logger) DebugCtx(ctx context.Context, msg string, args ...any) {
+	s.WithContext(ctx).l.Debug(msg, args...)
 }
 
-func (s *Logger) Debug(traceID, message string, args ...interface{}) {
-	s.l.With("traceID", traceID).Debug(message, args...)
+func (s *Logger) WarnCtx(ctx context.Context, msg string, args ...any) {
+	s.WithContext(ctx).l.Warn(msg, args...)
 }
 
 func (s *Logger) Close() error {

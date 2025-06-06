@@ -57,7 +57,11 @@ func marshalStack(err error) []stackFrame {
 	for _, v := range frames {
 		// Пропускаем системные кадры логгера. Начинаем записывать из места, где возникла ошибка
 		source := filepath.Join(filepath.Base(filepath.Dir(v.File)), filepath.Base(v.File))
-		if strings.Contains(source, "logger/logger.go") || strings.Contains(source, "slog/") {
+
+		// Фильтрация по пути
+		if strings.Contains(source, "logger/") ||
+			strings.Contains(source, "slog/") ||
+			strings.Contains(v.File, "online_marketplace_loggerlib@") {
 			continue
 		}
 

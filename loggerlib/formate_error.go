@@ -1,4 +1,4 @@
-// Package online_marketplace_loggerlib logger/formate_error.go
+// Package online_marketplace_libs logger/formate_error.go
 package online_marketplace_loggerlib
 
 import (
@@ -61,7 +61,7 @@ func marshalStack(err error) []stackFrame {
 		// Фильтрация по пути
 		if strings.Contains(source, "logger/") ||
 			strings.Contains(source, "slog/") ||
-			strings.Contains(v.File, "online_marketplace_loggerlib@") {
+			strings.Contains(v.File, "online_marketplace_libs@") {
 			continue
 		}
 

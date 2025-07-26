@@ -1,4 +1,4 @@
-// Package online_marketplace_loggerlib logger/logger.go
+// Package online_marketplace_libs logger/logger.go
 package online_marketplace_loggerlib
 
 import (

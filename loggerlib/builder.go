@@ -1,4 +1,4 @@
-// Package online_marketplace_loggerlib logger/builder.go
+// Package online_marketplace_libs logger/builder.go
 package online_marketplace_loggerlib
 
 // Builder pattern

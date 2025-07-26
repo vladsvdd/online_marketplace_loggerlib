@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/online_marketplace_loggerlib.iml" filepath="$PROJECT_DIR$/.idea/online_marketplace_loggerlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/online_marketplace_libs.iml" filepath="$PROJECT_DIR$/.idea/online_marketplace_libs.iml" />
     </modules>
   </component>
 </project>

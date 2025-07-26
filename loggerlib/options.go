@@ -1,4 +1,4 @@
-// Package online_marketplace_loggerlib logger/options.go
+// Package online_marketplace_libs logger/options.go
 package online_marketplace_loggerlib
 
 // Option Вариативные параметры через ...Option (Go-идиоматично)

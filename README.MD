@@ -1,50 +1,33 @@
-Реализация логера
+# Online Marketplace Libraries Monorepo
 
-types.go - Основные типы и константы
+Этот репозиторий предназначен для хранения нескольких библиотек, используемых в проектах Online Marketplace.
 
-options.go - Функциональные опции
+## Структура репозитория
 
-builder.go - Builder паттерн
+Каждая библиотека располагается в отдельной подпапке в корне репозитория. Пример структуры:
 
-context.go - Работа с контекстом
-
-handler.go - Кастомный обработчик логов
-
-formate_error.go - Форматирование ошибок
-
-logger.go - Основная реализация логгера
-
-Example interface
 ```
-type Logger interface {
-	NewRequestContext(parent context.Context, requestContext *RequestContext) context.Context
-	GetRequestContext(ctx context.Context) *RequestContext
-	With(args ...any) Logger
-	WithContext(ctx context.Context) Logger
-	Infof(traceID, message string, args ...interface{})
-	Warningf(traceID, message string, args ...interface{})
-	Errorf(traceID, message string, args ...interface{})
-	Debugf(traceID, message string, args ...interface{})
-}
+/
+├── loggerlib/        # Библиотека логирования
+│   ├── builder.go
+│   ├── ...
+│   └── go.mod (если нужен отдельный модуль)
+├── anotherlib/       # Пример другой библиотеки
+│   └── ...
+├── README.MD         # Описание репозитория
+├── go.mod            # Общий go.mod (если используется)
+└── ...
 ```
 
-### Пример использования:
-```
-logger, err := logger.MakeLogger(
-	logger.WithFilePath("./custom.log"),
-	logger.WithDebugMode(true),
-)
-if err != nil {
-	panic(err)
-}
-defer logger.Close()
+## Как добавить новую библиотеку
+1. Создайте новую папку в корне репозитория с уникальным именем вашей библиотеки.
+2. Разместите исходные файлы внутри этой папки.
+3. (Опционально) Инициализируйте отдельный go.mod внутри папки библиотеки, если требуется отдельный модуль.
 
-ctx := logger.NewRequestContext(context.Background(), &logger.RequestContext{
-	TraceID:   "trace-123",
-	RequestID: "req-456",
-	UserID:    "user-789",
-	StartedAt: time.Now(),
-})
+## loggerlib
+Библиотека для логирования. Исходные файлы находятся в папке `loggerlib/`.
 
-logger.Infof(ctx, "Processing request", "order_id", 123)
-```
+---
+
+## TODO
+- Добавить описание других библиотек по мере их появления.

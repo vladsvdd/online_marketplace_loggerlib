@@ -1,4 +1,4 @@
-module github.com/vladsvdd/online_marketplace_loggerlib
+module github.com/vladsvdd/online_marketplace_libs
 
 go 1.24
 

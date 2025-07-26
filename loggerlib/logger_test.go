@@ -32,7 +32,7 @@ func TestLogger_Infof(t *testing.T) {
 	}()
 
 	traceID := "test-trace"
-	log.Info(traceID, "Test message: %s", "info")
+	log.Info(context.Background(), traceID, "Test message: %s", "info")
 
 	time.Sleep(50 * time.Millisecond) // дать время на запись
 
@@ -66,7 +66,7 @@ func TestLogger_Warningf(t *testing.T) {
 	}()
 
 	traceID := "warn-trace"
-	log.Warning(traceID, "Warning message: %s", "warn")
+	log.Warn(context.Background(), traceID, "Warning message: %s", "warn")
 
 	time.Sleep(50 * time.Millisecond)
 
@@ -103,7 +103,7 @@ func TestLogger_Errorf(t *testing.T) {
 	}()
 
 	traceID := "error-trace"
-	log.Error(traceID, "Error message: %s", "error")
+	log.Error(context.Background(), traceID, "Error message: %s", "error")
 
 	time.Sleep(50 * time.Millisecond)
 
@@ -140,7 +140,7 @@ func TestLogger_Debugf(t *testing.T) {
 	}()
 
 	traceID := "debug-trace"
-	log.Debug(traceID, "Debug message: %s", "debug")
+	log.Debug(context.Background(), traceID, "Debug message: %s", "debug")
 
 	time.Sleep(50 * time.Millisecond)
 
@@ -177,7 +177,7 @@ func TestLogger_With(t *testing.T) {
 	}()
 
 	log2 := log.With("foo", "bar")
-	log2.Info("trace", "message with context")
+	log2.Info(context.Background(), "trace", "message with context")
 
 	time.Sleep(50 * time.Millisecond)
 
@@ -224,7 +224,7 @@ func TestLogger_WithContext(t *testing.T) {
 	ctx = log.NewRequestContext(ctx, rc)
 	log2 := log.WithContext(ctx)
 
-	log2.Info(rc.TraceID, "contextual log")
+	log2.Info(context.Background(), rc.TraceID, "contextual log")
 
 	time.Sleep(50 * time.Millisecond)
 

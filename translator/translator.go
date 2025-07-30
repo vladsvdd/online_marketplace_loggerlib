@@ -12,70 +12,390 @@ const (
 )
 
 var (
-	translations = make(map[string]map[Language]string)
-	mu           sync.RWMutex
-)
-
-// LoadTranslations загружает переводы из JSON-файла
-func LoadTranslations() {
-	mu.Lock()
-	defer mu.Unlock()
 	translations = map[string]map[Language]string{
 		"input_data_incorrect_format": {
 			EN: "Input data is in an incorrect format",
 			RU: "Данные введены в неверном формате",
 		},
-		"username_must_consist_of_letters_and_numbers": {
+		"username_required": {
+			EN: "Username is required",
+			RU: "Имя пользователя обязательно",
+		},
+		"username_alphanum": {
 			EN: "Username must consist of letters and numbers",
-			RU: "Имя пользователя должно состоять из букв и цифр",
+			RU: "Имя пользователя должно состоять из английских букв и цифр",
+		},
+		"email_required": {
+			EN: "Email is required",
+			RU: "Email обязателен",
+		},
+		"email_invalid": {
+			EN: "Invalid email format",
+			RU: "Неверный формат email",
+		},
+		"password_required": {
+			EN: "Password is required",
+			RU: "Пароль обязателен",
+		},
+		"password_min_length": {
+			EN: "Password must be at least 8 characters",
+			RU: "Пароль должен быть не менее 8 символов",
+		},
+		"password_max_length": {
+			EN: "Password must be no more than 32 characters",
+			RU: "Пароль должен быть не более 32 символов",
+		},
+		"password_confirm_required": {
+			EN: "Password confirmation is required",
+			RU: "Подтверждение пароля обязательно",
+		},
+		"password_confirm_mismatch": {
+			EN: "Password confirmation does not match",
+			RU: "Подтверждение пароля не совпадает",
+		},
+		"registration_error": {
+			EN: "Registration error",
+			RU: "Ошибка регистрации",
 		},
 		"registration_completed_successfully": {
 			EN: "Registration completed successfully",
 			RU: "Регистрация выполнена успешно",
 		},
-		"key_successfully_obtained": {
-			EN: "Key received successfully",
-			RU: "Ключ успешно получен",
+		"user_not_found": {
+			EN: "User not found",
+			RU: "Пользователь не найден",
 		},
-		"invalid_activation_code": {
-			EN: "Activation code is invalid",
-			RU: "Код активации недействителен",
+		"email_not_confirmed": {
+			EN: "Email not confirmed",
+			RU: "Email не подтвержден",
 		},
-		"account_confirmation_error": {
-			EN: "Account confirmation error",
-			RU: "Ошибка подтверждения учетной записи",
+		"invalid_login_or_password": {
+			EN: "Invalid login or password",
+			RU: "Неверный логин или пароль",
 		},
-		"invalid_email_address": {
-			EN: "Invalid email address",
-			RU: "Некорректный адрес электронной почты",
+		"token_generation_error": {
+			EN: "Token generation error",
+			RU: "Ошибка генерации токена",
 		},
-		"failed_to_request_password_reset": {
-			EN: "Failed to request password reset",
-			RU: "Не удалось запросить восстановление пароля",
+		"refresh_token_invalid": {
+			EN: "Invalid or expired refresh token",
+			RU: "Недействительный или истекший refresh токен",
 		},
-		"item_id_required": {
-			EN: "Item ID is required",
-			RU: "item_id обязателен",
+		"refresh_token_convert_error": {
+			EN: "Error converting refresh token to user ID",
+			RU: "Ошибка конвертации refresh токена в ID пользователя",
 		},
-		"error_processing_form": {
-			EN: "Error processing form",
-			RU: "Ошибка при обработке формы",
+		"jwt_token_creation_error": {
+			EN: "Error creating JWT token",
+			RU: "Ошибка создания JWT токена",
 		},
-		"data_missing_in_data_field": {
-			EN: "Data missing in 'data' field",
-			RU: "Отсутствуют данные в поле 'data'",
+		"user_already_exists": {
+			EN: "User already exists",
+			RU: "Пользователь уже существует",
 		},
-		"incorrect_data_in_data_field": {
-			EN: "Incorrect data in 'data' field",
-			RU: "Некорректные данные в поле 'data'",
+		"password_hash_error": {
+			EN: "Error hashing password",
+			RU: "Ошибка хеширования пароля",
+		},
+		"id_generation_error": {
+			EN: "Error generating user ID",
+			RU: "Ошибка генерации ID пользователя",
+		},
+		"user_creation_error": {
+			EN: "Error creating user",
+			RU: "Ошибка создания пользователя",
+		},
+		"activation_code_invalid": {
+			EN: "Invalid activation code",
+			RU: "Недействительный код активации",
+		},
+		"email_confirmation_success": {
+			EN: "Email confirmed successfully",
+			RU: "Email успешно подтвержден",
+		},
+		"password_restore_error": {
+			EN: "Error restoring password",
+			RU: "Ошибка восстановления пароля",
+		},
+		"password_restore_success": {
+			EN: "Password restore email sent",
+			RU: "Email для восстановления пароля отправлен",
+		},
+		"user_role_update_error": {
+			EN: "Error updating user role",
+			RU: "Ошибка обновления роли пользователя",
+		},
+		"user_role_update_success": {
+			EN: "User role updated successfully",
+			RU: "Роль пользователя успешно обновлена",
+		},
+		"user_roles_fetch_error": {
+			EN: "Error fetching user roles",
+			RU: "Ошибка получения ролей пользователя",
+		},
+		"user_has_role_error": {
+			EN: "Error checking user role",
+			RU: "Ошибка проверки роли пользователя",
+		},
+		"location_required": {
+			EN: "Location is required",
+			RU: "Местоположение обязательно",
+		},
+		"site_category_required": {
+			EN: "Site category is required",
+			RU: "Категория сайта обязательна",
+		},
+		"description_required": {
+			EN: "Description is required",
+			RU: "Описание обязательно",
+		},
+		"user_id_required": {
+			EN: "User ID is required",
+			RU: "ID пользователя обязателен",
+		},
+		"quick_announcement_site_category_required": {
+			EN: "Quick announcement site category is required",
+			RU: "Категория быстрого объявления обязательна",
+		},
+		"title_required": {
+			EN: "Title is required",
+			RU: "Заголовок обязателен",
+		},
+		"salary_required": {
+			EN: "Salary is required",
+			RU: "Зарплата обязательна",
+		},
+		"company_id_required": {
+			EN: "Company ID is required",
+			RU: "ID компании обязателен",
+		},
+		"price_required": {
+			EN: "Price is required",
+			RU: "Цена обязательна",
+		},
+		"contact_info_required": {
+			EN: "Contact information is required",
+			RU: "Контактная информация обязательна",
+		},
+		"property_type_required": {
+			EN: "Property type is required",
+			RU: "Тип недвижимости обязателен",
+		},
+		"room_count_required": {
+			EN: "Room count is required",
+			RU: "Количество комнат обязательно",
+		},
+		"floor_required": {
+			EN: "Floor is required",
+			RU: "Этаж обязателен",
+		},
+		"total_floors_required": {
+			EN: "Total floors is required",
+			RU: "Общее количество этажей обязательно",
+		},
+		"area_required": {
+			EN: "Area is required",
+			RU: "Площадь обязательна",
+		},
+		"experience_required": {
+			EN: "Experience is required",
+			RU: "Опыт работы обязателен",
+		},
+		"education_required": {
+			EN: "Education is required",
+			RU: "Образование обязательно",
+		},
+		"skills_required": {
+			EN: "Skills are required",
+			RU: "Навыки обязательны",
+		},
+		"vacancy_id_required": {
+			EN: "Vacancy ID is required",
+			RU: "ID вакансии обязателен",
+		},
+		"cover_letter_required": {
+			EN: "Cover letter is required",
+			RU: "Сопроводительное письмо обязательно",
+		},
+		"resume_id_required": {
+			EN: "Resume ID is required",
+			RU: "ID резюме обязателен",
+		},
+		"category_id_required": {
+			EN: "Category ID is required",
+			RU: "ID категории обязателен",
+		},
+		"name_required": {
+			EN: "Name is required",
+			RU: "Имя обязательно",
+		},
+		"phone_required": {
+			EN: "Phone is required",
+			RU: "Телефон обязателен",
+		},
+		"message_required": {
+			EN: "Message is required",
+			RU: "Сообщение обязательно",
+		},
+		"chat_id_required": {
+			EN: "Chat ID is required",
+			RU: "ID чата обязателен",
+		},
+		"participant_id_required": {
+			EN: "Participant ID is required",
+			RU: "ID участника обязателен",
+		},
+		"notification_type_required": {
+			EN: "Notification type is required",
+			RU: "Тип уведомления обязателен",
+		},
+		"notification_enabled_required": {
+			EN: "Notification enabled status is required",
+			RU: "Статус включения уведомлений обязателен",
+		},
+		"search_query_required": {
+			EN: "Search query is required",
+			RU: "Поисковый запрос обязателен",
+		},
+		"favorite_added_success": {
+			EN: "Added to favorites successfully",
+			RU: "Успешно добавлено в избранное",
+		},
+		"favorite_removed_success": {
+			EN: "Removed from favorites successfully",
+			RU: "Успешно удалено из избранного",
+		},
+		"favorite_already_exists": {
+			EN: "Already in favorites",
+			RU: "Уже в избранном",
+		},
+		"favorite_not_found": {
+			EN: "Not found in favorites",
+			RU: "Не найдено в избранном",
+		},
+		"subscription_created_success": {
+			EN: "Subscription created successfully",
+			RU: "Подписка успешно создана",
+		},
+		"subscription_updated_success": {
+			EN: "Subscription updated successfully",
+			RU: "Подписка успешно обновлена",
+		},
+		"subscription_deleted_success": {
+			EN: "Subscription deleted successfully",
+			RU: "Подписка успешно удалена",
+		},
+		"subscription_not_found": {
+			EN: "Subscription not found",
+			RU: "Подписка не найдена",
+		},
+		"item_created_success": {
+			EN: "Item created successfully",
+			RU: "Элемент успешно создан",
+		},
+		"item_updated_success": {
+			EN: "Item updated successfully",
+			RU: "Элемент успешно обновлен",
+		},
+		"item_deleted_success": {
+			EN: "Item deleted successfully",
+			RU: "Элемент успешно удален",
+		},
+		"item_not_found": {
+			EN: "Item not found",
+			RU: "Элемент не найден",
+		},
+		"database_error": {
+			EN: "Database error",
+			RU: "Ошибка базы данных",
+		},
+		"validation_error": {
+			EN: "Validation error",
+			RU: "Ошибка валидации",
+		},
+		"unauthorized": {
+			EN: "Unauthorized",
+			RU: "Не авторизован",
+		},
+		"forbidden": {
+			EN: "Forbidden",
+			RU: "Доступ запрещен",
+		},
+		"not_found": {
+			EN: "Not found",
+			RU: "Не найдено",
+		},
+		"internal_server_error": {
+			EN: "Internal server error",
+			RU: "Внутренняя ошибка сервера",
+		},
+		"service_unavailable": {
+			EN: "Service unavailable",
+			RU: "Сервис недоступен",
+		},
+		"authorization_completed_successfully": {
+			EN: "Authorization completed successfully",
+			RU: "Авторизация выполнена успешно",
+		},
+		"data_could_not_be_received": {
+			EN: "Data could not be received",
+			RU: "Данные не удалось получить",
+		},
+		"data": {
+			EN: "Data",
+			RU: "Данные",
+		},
+		"invalid_limit_param": {
+			EN: "Invalid limit parameter",
+			RU: "Неверный параметр лимита",
+		},
+		"id_required": {
+			EN: "ID is required",
+			RU: "ID обязателен",
+		},
+		"data_not_found": {
+			EN: "Data not found",
+			RU: "Данные не найдены",
+		},
+		"success": {
+			EN: "Success",
+			RU: "Успешно",
+		},
+		"record_updated_successfully": {
+			EN: "Record updated successfully",
+			RU: "Запись успешно обновлена",
+		},
+		"error_deleting_data": {
+			EN: "Error deleting data",
+			RU: "Ошибка удаления данных",
+		},
+		"fill_user_id": {
+			EN: "Please fill user ID",
+			RU: "Заполните ID пользователя",
+		},
+		"not_enough_rights": {
+			EN: "Not enough rights",
+			RU: "Недостаточно прав",
+		},
+		"user_update_error": {
+			EN: "User update error",
+			RU: "Ошибка обновления пользователя",
 		},
 		"settings": {
 			EN: "Settings",
 			RU: "Настройки",
 		},
-		"vacancy_id_required": {
-			EN: "Vacancy ID is required",
-			RU: "vacancyID обязателен",
+		"error_processing_form": {
+			EN: "Error processing form",
+			RU: "Ошибка обработки формы",
+		},
+		"data_missing_in_data_field": {
+			EN: "Data missing in data field",
+			RU: "Отсутствуют данные в поле data",
+		},
+		"incorrect_data_in_data_field": {
+			EN: "Incorrect data in data field",
+			RU: "Некорректные данные в поле data",
 		},
 		"invalid_input": {
 			EN: "Invalid input",
@@ -99,223 +419,96 @@ func LoadTranslations() {
 		},
 		"responded_successfully": {
 			EN: "Responded successfully",
-			RU: "Отклик успешно отправлен",
+			RU: "Успешно откликнулись",
 		},
 		"vacancy_responds": {
 			EN: "Vacancy responds",
-			RU: "Отклики",
+			RU: "Отклики на вакансию",
+		},
+		"id_parameter_is_required": {
+			EN: "ID parameter is required",
+			RU: "Параметр ID обязателен",
+		},
+		"user_id_is_required": {
+			EN: "User ID is required",
+			RU: "ID пользователя обязателен",
 		},
 		"vacancy_respond": {
 			EN: "Vacancy respond",
-			RU: "Отклик",
+			RU: "Отклик на вакансию",
 		},
-		"site_categories": {
-			EN: "Site categories",
-			RU: "Категории сайта",
-		},
-		"locations": {
-			EN: "Locations",
-			RU: "Локации",
-		},
-		"phone": {
-			EN: "Phone",
-			RU: "Телефон",
+		"user_role_not_found": {
+			EN: "User role not found",
+			RU: "Роль пользователя не найдена",
 		},
 		"vacancies": {
 			EN: "Vacancies",
 			RU: "Вакансии",
 		},
-		"resumes": {
-			EN: "Resumes",
-			RU: "Резюме",
+		"phone": {
+			EN: "Phone",
+			RU: "Телефон",
 		},
-		"offerings": {
-			EN: "Offerings",
-			RU: "Услуги",
+		"vacancy_successfully_added": {
+			EN: "Vacancy successfully added",
+			RU: "Вакансия успешно добавлена",
 		},
-		"realty": {
-			EN: "Realty",
-			RU: "Недвижимость",
+		"no_access": {
+			EN: "No access",
+			RU: "Нет доступа",
 		},
-		"id_parameter_is_required": {
-			EN: "ID parameter is required",
-			RU: "ID обязателен",
+		"incorrect_json_data": {
+			EN: "Incorrect JSON data",
+			RU: "Некорректные JSON данные",
 		},
-		"user_id_is_required": {
-			EN: "User ID is required",
-			RU: "user ID обязателен",
+		// Ключи из auth_handler
+		"username_must_consist_of_letters_and_numbers": {
+			EN: "Username must consist of letters and numbers",
+			RU: "Имя пользователя должно состоять из букв и цифр",
 		},
-		"username_required": {
-			EN: "Username is required",
-			RU: "Имя пользователя обязательно",
+		"user_identification_error": {
+			EN: "User identification error",
+			RU: "Ошибка идентификации пользователя",
 		},
-		"username_alphanum": {
-			EN: "Username must contain only letters and numbers",
-			RU: "Имя пользователя должно содержать только буквы и цифры",
+		"user_roles_and_permissions": {
+			EN: "User roles and permissions",
+			RU: "Роли и права пользователя",
 		},
-		"username_min_length": {
-			EN: "Username must be at least 1 character",
-			RU: "Имя пользователя должно быть не менее 1 символа",
+		"invalid_token": {
+			EN: "Invalid token",
+			RU: "Недействительный токен",
 		},
-		"username_max_length": {
-			EN: "Username must be at most 25 characters",
-			RU: "Имя пользователя должно быть не более 25 символов",
+		"login_error": {
+			EN: "Login error",
+			RU: "Ошибка входа",
 		},
-		"email_required": {
-			EN: "Email is required",
-			RU: "Email обязателен",
+		"key_successfully_obtained": {
+			EN: "Key successfully obtained",
+			RU: "Ключ успешно получен",
 		},
-		"email_invalid": {
-			EN: "Email is invalid",
-			RU: "Email некорректный",
+		"invalid_activation_code": {
+			EN: "Invalid activation code",
+			RU: "Недействительный код активации",
 		},
-		"email_min_length": {
-			EN: "Email must be at least 1 character",
-			RU: "Email должен быть не менее 1 символа",
+		"account_confirmation_error": {
+			EN: "Account confirmation error",
+			RU: "Ошибка подтверждения аккаунта",
 		},
-		"email_max_length": {
-			EN: "Email must be at most 100 characters",
-			RU: "Email должен быть не более 100 символов",
+		"invalid_email_address": {
+			EN: "Invalid email address",
+			RU: "Недействительный адрес email",
 		},
-		"password_required": {
-			EN: "Password is required",
-			RU: "Пароль обязателен",
+		"failed_to_request_password_reset": {
+			EN: "Failed to request password reset",
+			RU: "Не удалось запросить сброс пароля",
 		},
-		"password_min_length": {
-			EN: "Password must be at least 8 characters",
-			RU: "Пароль должен быть не менее 8 символов",
-		},
-		"password_max_length": {
-			EN: "Password must be at most 32 characters",
-			RU: "Пароль должен быть не более 32 символов",
-		},
-		"password_confirm_required": {
-			EN: "Password confirmation is required",
-			RU: "Подтверждение пароля обязательно",
-		},
-		"password_confirm_mismatch": {
-			EN: "Password confirmation does not match password",
-			RU: "Подтверждение пароля не совпадает с паролем",
-		},
-		"quick_announcement_description_required": {
-			EN: "Description is required",
-			RU: "Описание обязательно",
-		},
-		"quick_announcement_user_id_required": {
-			EN: "User ID is required",
-			RU: "ID пользователя обязательно",
-		},
-		"quick_announcement_location_id_required": {
-			EN: "Location ID is required",
-			RU: "ID локации обязательно",
-		},
-		"quick_announcement_site_category_id_required": {
-			EN: "Site category ID is required",
-			RU: "ID категории сайта обязательно",
-		},
-		"quick_announcement_site_category_id2_required": {
-			EN: "Quick announcement site category ID is required",
-			RU: "ID категории быстрого объявления обязательно",
-		},
-		"quick_announcement_respond_id_required": {
-			EN: "Quick announcement ID is required",
-			RU: "ID быстрого объявления обязательно",
-		},
-		"quick_announcement_respond_user_id_required": {
-			EN: "User ID is required",
-			RU: "ID пользователя обязательно",
-		},
-		"messenger_name_required": {
-			EN: "Messenger name is required",
-			RU: "Имя мессенджера обязательно",
-		},
-		"messenger_group_id_required": {
-			EN: "Group ID is required",
-			RU: "ID группы обязательно",
-		},
-		"messenger_location_id_required": {
-			EN: "Location ID is required",
-			RU: "ID локации обязательно",
-		},
-		"messenger_site_category_id_required": {
-			EN: "Site category ID is required",
-			RU: "ID категории сайта обязательно",
-		},
-		"realty_site_category_id_required": {
-			EN: "Site category ID is required",
-			RU: "ID категории сайта обязательно",
-		},
-		"realty_user_id_required": {
-			EN: "User ID is required",
-			RU: "ID пользователя обязательно",
-		},
-		"realty_location_id_required": {
-			EN: "Location ID is required",
-			RU: "ID локации обязательно",
-		},
-		"realty_title_required": {
-			EN: "Title is required",
-			RU: "Заголовок обязателен",
-		},
-		"realty_description_required": {
-			EN: "Description is required",
-			RU: "Описание обязательно",
-		},
-		"vacancy_site_category_id_required": {
-			EN: "Site category ID is required",
-			RU: "ID категории сайта обязательно",
-		},
-		"vacancy_title_required": {
-			EN: "Title is required",
-			RU: "Заголовок обязателен",
-		},
-		"vacancy_description_required": {
-			EN: "Description is required",
-			RU: "Описание обязательно",
-		},
-		"vacancy_currency_id_required": {
-			EN: "Currency ID is required",
-			RU: "ID валюты обязательно",
-		},
-		"vacancy_user_id_required": {
-			EN: "User ID is required",
-			RU: "ID пользователя обязательно",
-		},
-		"vacancy_location_id_required": {
-			EN: "Location ID is required",
-			RU: "ID локации обязательно",
-		},
-		"offering_site_category_id_required": {
-			EN: "Site category ID is required",
-			RU: "ID категории сайта обязательно",
-		},
-		"offering_title_required": {
-			EN: "Title is required",
-			RU: "Заголовок обязателен",
-		},
-		"offering_description_required": {
-			EN: "Description is required",
-			RU: "Описание обязательно",
-		},
-		"offering_user_id_required": {
-			EN: "User ID is required",
-			RU: "ID пользователя обязательно",
-		},
-		"offering_location_id_required": {
-			EN: "Location ID is required",
-			RU: "ID локации обязательно",
-		},
-		"subscription_subscriber_id_required": {
-			EN: "Subscriber ID is required",
-			RU: "ID подписчика обязательно",
-		},
-		"subscription_target_user_id_required": {
-			EN: "Target user ID is required",
-			RU: "ID целевого пользователя обязательно",
+		"password_updated": {
+			EN: "Password updated",
+			RU: "Пароль обновлен",
 		},
 	}
-
-}
+	mu sync.RWMutex
+)
 
 // Translate возвращает перевод по ключу и языку
 func Translate(key string, lang Language) string {
@@ -325,7 +518,7 @@ func Translate(key string, lang Language) string {
 		if tr, ok := val[lang]; ok {
 			return tr
 		}
-		if tr, ok := val[EN]; ok {
+		if tr, ok := val[RU]; ok { // Default to Russian
 			return tr
 		}
 	}

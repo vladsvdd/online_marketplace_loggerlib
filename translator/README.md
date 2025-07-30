@@ -1,42 +1,39 @@
 # Translator
 
-Модуль для мультиязычных переводов (локализации) фраз.
+Простая библиотека для перевода текста на разные языки.
 
-## Как использовать
-
-1. **Загрузите переводы из файла:**
+## Использование
 
 ```go
 import "online_marketplace_libs/translator"
 
-err := translator.LoadTranslations("/path/to/translations.json")
-if err != nil {
-    // обработка ошибки
-}
+// Получить перевод
+message := translator.Translate("user_not_found", translator.RU)
+// Результат: "Пользователь не найден"
+
+// Если перевод не найден, возвращается ключ
+message := translator.Translate("unknown_key", translator.RU)
+// Результат: "unknown_key"
 ```
 
-2. **Получите перевод по ключу и языку:**
+## Поддерживаемые языки
 
-```go
-msg := translator.Translate("user_not_found", translator.RU) // "Пользователь не найден"
-msg2 := translator.Translate("user_not_found", translator.EN) // "User not found"
-```
+- `translator.EN` - Английский
+- `translator.RU` - Русский (по умолчанию)
 
-## Формат файла переводов (JSON)
+## Доступные ключи переводов
 
-```json
-{
-  "user_not_found": {
-    "en": "User not found",
-    "ru": "Пользователь не найден"
-  },
-  "invalid_password": {
-    "en": "Invalid password",
-    "ru": "Неверный пароль"
-  }
-}
-```
+Библиотека содержит переводы для всех основных сообщений системы:
 
-## Добавление новых языков и фраз
-- Просто добавьте новые ключи и переводы в `translations.json`.
-- Для поддержки других языков используйте их ISO-коды (например, "de", "fr"). 
+- Ошибки валидации (`input_data_incorrect_format`, `username_required`, etc.)
+- Сообщения аутентификации (`user_not_found`, `invalid_login_or_password`, etc.)
+- Сообщения токенов (`token_generation_error`, `refresh_token_invalid`, etc.)
+- Общие ошибки (`database_error`, `validation_error`, etc.)
+- Успешные операции (`item_created_success`, `favorite_added_success`, etc.)
+
+## Особенности
+
+- Переводы хранятся в памяти (не требуется загрузка из файла)
+- Потокобезопасность через `sync.RWMutex`
+- Fallback на русский язык, если перевод для запрошенного языка не найден
+- Если ключ не найден, возвращается сам ключ 

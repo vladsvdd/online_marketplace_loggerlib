@@ -1,4 +1,4 @@
-# Online Marketplace Libraries Monorepo
+# Online Marketplace Libraries
 
 Этот репозиторий предназначен для хранения нескольких библиотек, используемых в проектах Online Marketplace.
 

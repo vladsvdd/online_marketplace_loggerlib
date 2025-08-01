@@ -1,0 +1,30 @@
+name: Tag Latest
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  tag-latest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Delete existing latest tag
+        run: |
+          git tag -d latest || true
+          git push origin :refs/tags/latest || true
+
+      - name: Create and push latest tag
+        run: |
+          git tag latest
+          git push origin latest 

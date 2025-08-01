@@ -5,10 +5,11 @@
 
 set -euo pipefail  # Более строгий режим выполнения
 
-# Проверка правильного remote URL
+# Проверка правильного remote URL (поддерживает токены аутентификации)
 REMOTE_URL=$(git remote get-url origin)
 if [[ "$REMOTE_URL" != *"online_marketplace_libs.git" ]]; then
     echo "Ошибка: неправильный remote URL. Ожидается online_marketplace_libs.git" >&2
+    echo "Текущий URL: $REMOTE_URL" >&2
     echo "Исправьте командой: git remote set-url origin https://github.com/vladsvdd/online_marketplace_libs.git" >&2
     exit 1
 fi

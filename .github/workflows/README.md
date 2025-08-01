@@ -218,7 +218,7 @@ git push origin master
 
 ### Посмотреть все версии
 ```bash
-git tag -l
+git tag -l 
 ```
 
 ### Посмотреть последние версии

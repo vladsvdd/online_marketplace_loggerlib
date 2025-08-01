@@ -1,0 +1,60 @@
+name: Auto Version on Commit
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+      - 'README**'
+
+permissions:
+  contents: write
+
+jobs:
+  auto-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Check if version bump is needed
+        id: check-version
+        run: |
+          # Проверяем, есть ли изменения в коде (исключая документацию)
+          if git diff --name-only HEAD~1 | grep -v -E '\.(md|txt)$' | grep -v 'README' | grep -v '.gitignore' | grep -q .; then
+            # Проверяем, не содержит ли коммит флаг пропуска версионирования
+            COMMIT_MSG=$(git log -1 --pretty=format:"%s")
+            if echo "$COMMIT_MSG" | grep -q "\[skip version\]"; then
+              echo "need_version=false" >> $GITHUB_OUTPUT
+              echo "Version bump skipped by commit message"
+            else
+              echo "need_version=true" >> $GITHUB_OUTPUT
+              echo "Changes detected, version bump needed"
+            fi
+          else
+            echo "need_version=false" >> $GITHUB_OUTPUT
+            echo "No code changes detected, skipping version bump"
+          fi
+
+      - name: Run version script (patch increment)
+        if: steps.check-version.outputs.need_version == 'true'
+        run: |
+          chmod +x ./scripts/version.sh
+          ./scripts/version.sh patch
+
+      - name: Verify tags
+        if: steps.check-version.outputs.need_version == 'true'
+        run: |
+          git fetch --tags
+          git tag -l | tail -5 

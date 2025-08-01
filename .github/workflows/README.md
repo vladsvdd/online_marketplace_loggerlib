@@ -19,19 +19,19 @@
 ```bash
 git add .
 git commit -m "feat: add new logging functionality"
-git push origin main
+git push origin master
 ```
 
 ### Коммит без версионирования
 ```bash
 git commit -m "docs: update readme [skip version]"
-git push origin main
+git push origin master
 ```
 
 ### Изменения только в документации (версия не изменится)
 ```bash
 git commit -m "docs: update installation guide"
-git push origin main
+git push origin master
 ```
 
 ## Мониторинг

@@ -3,11 +3,11 @@
 # Скрипт для автоматического управления версиями
 # Использование: ./version.sh [major|minor|patch]
 
-set -e
+set -euo pipefail  # Более строгий режим выполнения
 
 # Функция для получения текущей версии
 get_current_version() {
-    # Ищем только теги версий (vX.Y.Z), исключая 'latest' и другие неверсионные теги
+    # Ищем только теги версий (vX.Y.Z), исключая другие теги
     git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1 || echo "v0.0.0"
 }
 
@@ -15,6 +15,12 @@ get_current_version() {
 increment_version() {
     local version=$1
     local increment_type=$2
+
+    # Проверяем формат версии
+    if [[ ! "$version" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        echo "Ошибка: некорректный формат версии '$version'" >&2
+        exit 1
+    fi
 
     # Убираем префикс v
     version=${version#v}
@@ -50,6 +56,12 @@ if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     exit 1
 fi
 
+# Проверяем, что нет незакоммиченных изменений
+if ! git diff-index --quiet HEAD --; then
+    echo "Ошибка: есть незакоммиченные изменения" >&2
+    exit 1
+fi
+
 # Основная логика
 if [ $# -eq 0 ]; then
     echo "Использование: $0 [major|minor|patch]" >&2
@@ -66,11 +78,18 @@ new_version=$(increment_version "$current_version" "$increment_type")
 echo "Текущая версия: $current_version"
 echo "Новая версия: $new_version"
 
+# Проверяем, существует ли уже такой тег
+if git show-ref --tags --quiet --verify "refs/tags/$new_version"; then
+    echo "Ошибка: тег $new_version уже существует" >&2
+    exit 1
+fi
+
 # Создаем тег с аннотацией
 git tag -a "$new_version" -m "Version $new_version"
 git tag -f latest
 
 # Пушим теги
+echo "Отправка тегов на удаленный репозиторий..."
 git push origin "$new_version"
 git push -f origin latest
 

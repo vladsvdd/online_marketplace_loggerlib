@@ -3,7 +3,6 @@ name: Auto Version on Commit
 on:
   push:
     branches:
-      - main
       - master
     paths-ignore:
       - '**.md'

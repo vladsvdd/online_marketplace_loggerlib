@@ -94,8 +94,7 @@ const (
 	KeyDataNotFound                           = "data_not_found"
 	KeyResumeIDShouldNotBeNil                 = "resume_id_should_not_be_nil"
 	KeyGroupIDInvalidFormat                   = "group_id_invalid_format"
-	KeyTelegramMarshalError                   = "telegram_marshal_error"
-	KeyVKMarshalError                         = "vk_marshal_error"
+	KeyMarshalError                           = "marshal_error"
 	KeyTelegramLocationError                  = "telegram_location_error"
 	KeyInputDataIncorrectFormat               = "input_data_incorrect_format"
 	KeyUsernameAlphanum                       = "username_alphanum"
@@ -745,13 +744,9 @@ var (
 			EN: "VK: location or ID is nil",
 			RU: "VK: локация или ID пустые",
 		},
-		KeyTelegramMarshalError: {
-			EN: "Error marshaling message body for Telegram",
-			RU: "Ошибка маршалинга тела сообщения для телеграма",
-		},
-		KeyVKMarshalError: {
-			EN: "Error marshaling message body for VK",
-			RU: "Ошибка маршалинга тела сообщения для vk",
+		KeyMarshalError: {
+			EN: "Error marshaling message body",
+			RU: "Ошибка маршалинга тела сообщения",
 		},
 		KeyGroupIDInvalidFormat: {
 			EN: "Group ID has invalid format",

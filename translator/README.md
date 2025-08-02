@@ -27,7 +27,7 @@ error := errors.New(translator.Translate(translator.KeyItemCreationFailed, trans
 
 // ❌ Неправильно - строковые литералы могут содержать опечатки
 message := translator.Translate("title_required", translator.RU)
-error := errors.New(translator.Translate("item_creation_failed", translator.RU))
+error := errors.New(translator.Translate(translator.KeyItemCreationFailed, translator.RU))
 ```
 
 ### Доступные константы

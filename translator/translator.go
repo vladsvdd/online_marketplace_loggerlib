@@ -77,7 +77,6 @@ const (
 	KeyResumeRequired          = "resume_required"
 
 	// Дополнительные ошибки и сообщения
-	KeyIDGenerationError                      = "id_generation_error"
 	KeyUserCreationError                      = "user_creation_error"
 	KeyPasswordConfirmMismatch                = "password_confirm_mismatch"
 	KeyDatabaseError                          = "database_error"
@@ -106,131 +105,22 @@ const (
 	KeyPasswordMaxLength                      = "password_max_length"
 
 	// User related
-	KeyUserIDEmpty            = "user_id_empty"
-	KeyUserRoleNotFound       = "user_role_not_found"
-	KeyUserRoleCreationError  = "user_role_creation_error"
-	KeyUserRoleUpdateError    = "user_role_update_error"
-	KeyUserRoleDeleteError    = "user_role_delete_error"
-	KeyUserRoleNotFoundError  = "user_role_not_found_error"
-	KeyUserRoleAlreadyExists  = "user_role_already_exists"
-	KeyUserRoleCreationFailed = "user_role_creation_failed"
-	KeyUserRoleUpdateFailed   = "user_role_update_failed"
-	KeyUserRoleDeleteFailed   = "user_role_delete_failed"
+	KeyUserIDEmpty         = "user_id_empty"
+	KeyUserRoleNotFound    = "user_role_not_found"
+	KeyUserRoleUpdateError = "user_role_update_error"
 
 	// Vacancy related
-	KeyVacancyTitleRequired       = "vacancy_title_required"
-	KeyVacancyDescriptionRequired = "vacancy_description_required"
-	KeyVacancyLocationRequired    = "vacancy_location_required"
-	KeyVacancyCategoryRequired    = "vacancy_category_required"
-	KeyVacancySalaryRequired      = "vacancy_salary_required"
-	KeyVacancyContactInfoRequired = "vacancy_contact_info_required"
-	KeyVacancyExperienceRequired  = "vacancy_experience_required"
-	KeyVacancyEducationRequired   = "vacancy_education_required"
-	KeyVacancySkillsRequired      = "vacancy_skills_required"
-	KeyVacancyCreatedSuccess      = "vacancy_created_success"
-	KeyVacancyUpdatedSuccess      = "vacancy_updated_success"
-	KeyVacancyDeletedSuccess      = "vacancy_deleted_success"
-	KeyVacancyNotFound            = "vacancy_not_found"
-	KeyVacancyCreationError       = "vacancy_creation_error"
-	KeyVacancyUpdateError         = "vacancy_update_error"
-	KeyVacancyDeleteError         = "vacancy_delete_error"
-	KeyVacancyCreationFailed      = "vacancy_creation_failed"
-	KeyVacancyUpdateFailed        = "vacancy_update_failed"
-	KeyVacancyDeleteFailed        = "vacancy_delete_failed"
-	KeyVacancyIDShouldNotBeNil    = "vacancy_id_should_not_be_nil"
-	KeyVacancyCurrencyIDRequired  = "vacancy_currency_id_required"
+	KeyVacancyIDShouldNotBeNil = "vacancy_id_should_not_be_nil"
 
 	// Resume related
-	KeyResumeTitleRequired       = "resume_title_required"
-	KeyResumeDescriptionRequired = "resume_description_required"
-	KeyResumeLocationRequired    = "resume_location_required"
-	KeyResumeCategoryRequired    = "resume_category_required"
-	KeyResumeSalaryRequired      = "resume_salary_required"
-	KeyResumeContactInfoRequired = "resume_contact_info_required"
-	KeyResumeExperienceRequired  = "resume_experience_required"
-	KeyResumeEducationRequired   = "resume_education_required"
-	KeyResumeSkillsRequired      = "resume_skills_required"
-	KeyResumeCreatedSuccess      = "resume_created_success"
-	KeyResumeUpdatedSuccess      = "resume_updated_success"
-	KeyResumeDeletedSuccess      = "resume_deleted_success"
-	KeyResumeNotFound            = "resume_not_found"
-	KeyResumeCreationError       = "resume_creation_error"
-	KeyResumeUpdateError         = "resume_update_error"
-	KeyResumeDeleteError         = "resume_delete_error"
-	KeyResumeCreationFailed      = "resume_creation_failed"
-	KeyResumeUpdateFailed        = "resume_update_failed"
-	KeyResumeDeleteFailed        = "resume_delete_failed"
-	KeyResumeCurrencyIDRequired  = "resume_currency_id_required"
-
-	// Realty related
-	KeyRealtyTitleRequired        = "realty_title_required"
-	KeyRealtyDescriptionRequired  = "realty_description_required"
-	KeyRealtyLocationRequired     = "realty_location_required"
-	KeyRealtyCategoryRequired     = "realty_category_required"
-	KeyRealtyPriceRequired        = "realty_price_required"
-	KeyRealtyContactInfoRequired  = "realty_contact_info_required"
-	KeyRealtyPropertyTypeRequired = "realty_property_type_required"
-	KeyRealtyRoomCountRequired    = "realty_room_count_required"
-	KeyRealtyFloorRequired        = "realty_floor_required"
-	KeyRealtyTotalFloorsRequired  = "realty_total_floors_required"
-	KeyRealtyAreaRequired         = "realty_area_required"
-	KeyRealtyCreatedSuccess       = "realty_created_success"
-	KeyRealtyUpdatedSuccess       = "realty_updated_success"
-	KeyRealtyDeletedSuccess       = "realty_deleted_success"
-	KeyRealtyNotFound             = "realty_not_found"
-	KeyRealtyCreationError        = "realty_creation_error"
-	KeyRealtyUpdateError          = "realty_update_error"
-	KeyRealtyDeleteError          = "realty_delete_error"
-	KeyRealtyCreationFailed       = "realty_creation_failed"
-	KeyRealtyUpdateFailed         = "realty_update_failed"
-	KeyRealtyDeleteFailed         = "realty_delete_failed"
-	KeyRealtyCurrencyIDRequired   = "realty_currency_id_required"
-
-	// Offering related
-	KeyOfferingTitleRequired       = "offering_title_required"
-	KeyOfferingDescriptionRequired = "offering_description_required"
-	KeyOfferingLocationRequired    = "offering_location_required"
-	KeyOfferingCategoryRequired    = "offering_category_required"
-	KeyOfferingPriceRequired       = "offering_price_required"
-	KeyOfferingContactInfoRequired = "offering_contact_info_required"
-	KeyOfferingCreatedSuccess      = "offering_created_success"
-	KeyOfferingUpdatedSuccess      = "offering_updated_success"
-	KeyOfferingDeletedSuccess      = "offering_deleted_success"
-	KeyOfferingNotFound            = "offering_not_found"
-	KeyOfferingCreationError       = "offering_creation_error"
-	KeyOfferingUpdateError         = "offering_update_error"
-	KeyOfferingDeleteError         = "offering_delete_error"
-	KeyOfferingCreationFailed      = "offering_creation_failed"
-	KeyOfferingUpdateFailed        = "offering_update_failed"
-	KeyOfferingDeleteFailed        = "offering_delete_failed"
-	KeyOfferingCurrencyIDRequired  = "offering_currency_id_required"
-
-	// Quick announcement related
-	KeyQuickAnnouncementTitleRequired       = "quick_announcement_title_required"
-	KeyQuickAnnouncementDescriptionRequired = "quick_announcement_description_required"
-	KeyQuickAnnouncementLocationRequired    = "quick_announcement_location_required"
-	KeyQuickAnnouncementCategoryRequired    = "quick_announcement_category_required"
-	KeyQuickAnnouncementPriceRequired       = "quick_announcement_price_required"
-	KeyQuickAnnouncementContactInfoRequired = "quick_announcement_contact_info_required"
-	KeyQuickAnnouncementCreatedSuccess      = "quick_announcement_created_success"
-	KeyQuickAnnouncementUpdatedSuccess      = "quick_announcement_updated_success"
-	KeyQuickAnnouncementDeletedSuccess      = "quick_announcement_deleted_success"
-	KeyQuickAnnouncementNotFound            = "quick_announcement_not_found"
-	KeyQuickAnnouncementCreationError       = "quick_announcement_creation_error"
-	KeyQuickAnnouncementUpdateError         = "quick_announcement_update_error"
-	KeyQuickAnnouncementDeleteError         = "quick_announcement_delete_error"
-	KeyQuickAnnouncementCreationFailed      = "quick_announcement_creation_failed"
-	KeyQuickAnnouncementUpdateFailed        = "quick_announcement_update_failed"
-	KeyQuickAnnouncementDeleteFailed        = "quick_announcement_delete_failed"
-	KeyQuickAnnouncementCurrencyIDRequired  = "quick_announcement_currency_id_required"
+	KeyResumeNotFound = "resume_not_found"
 
 	// Messenger related
-	KeyMessengerGetError        = "messenger_get_error"
-	KeyMessengerGroupIDRequired = "messenger_group_id_required"
+	KeyMessengerGetError = "messenger_get_error"
 
 	// Skill related
 	KeySkillNameRequired     = "skill_name_required"
-	KeySkillInsertError      = "skill_insert_error"
+	KeyInsertError           = "insert_error"
 	KeySkillDeleteIDRequired = "skill_delete_id_required"
 
 	// Currency related
@@ -549,10 +439,6 @@ var (
 		KeyPasswordHashError: {
 			EN: "Error hashing password",
 			RU: "Ошибка хеширования пароля",
-		},
-		KeyIDGenerationError: {
-			EN: "Error generating ID",
-			RU: "Ошибка генерации ID",
 		},
 		KeyUserCreationError: {
 			EN: "Error creating user",
@@ -913,9 +799,9 @@ var (
 			EN: "Skill name is required",
 			RU: "Название навыка обязательно",
 		},
-		KeySkillInsertError: {
-			EN: "Skill insert error",
-			RU: "Ошибка вставки умений",
+		KeyInsertError: {
+			EN: "Insert error",
+			RU: "Ошибка вставки",
 		},
 		KeySkillDeleteIDRequired: {
 			EN: "Neither ID nor binding_id provided for deletion",

@@ -627,7 +627,7 @@ var (
 		},
 
 		KeyUserRoleNotFound: {
-			EN: "User role not found",
+			EN: "User role not found ",
 			RU: "Роль пользователя не найдена",
 		},
 		KeyNoAccess: {

@@ -95,7 +95,6 @@ const (
 	KeyResumeIDShouldNotBeNil                 = "resume_id_should_not_be_nil"
 	KeyGroupIDInvalidFormat                   = "group_id_invalid_format"
 	KeyMarshalError                           = "marshal_error"
-	KeyTelegramLocationError                  = "telegram_location_error"
 	KeyInputDataIncorrectFormat               = "input_data_incorrect_format"
 	KeyUsernameAlphanum                       = "username_alphanum"
 	KeyUsernameMustConsistOfLettersAndNumbers = "username_must_consist_of_letters_and_numbers"
@@ -191,7 +190,7 @@ const (
 	KeyRespondedSuccessfully              = "responded_successfully"
 	KeyVacancyResponds                    = "vacancy_responds"
 	KeyVacancyRespond                     = "vacancy_respond"
-	KeyVKLocationError                    = "vk_location_error"
+	KeyLocationError                      = "location_error"
 	KeyQueryTooShort                      = "query_too_short"
 	KeySearchResult                       = "search_result"
 )
@@ -736,13 +735,9 @@ var (
 			EN: "Serialization error",
 			RU: "Ошибка сериализации",
 		},
-		KeyTelegramLocationError: {
-			EN: "Telegram: location or ID is nil",
-			RU: "Telegram: локация или ID пустые",
-		},
-		KeyVKLocationError: {
-			EN: "VK: location or ID is nil",
-			RU: "VK: локация или ID пустые",
+		KeyLocationError: {
+			EN: "location or ID is nil",
+			RU: "локация или ID пустые",
 		},
 		KeyMarshalError: {
 			EN: "Error marshaling message body",

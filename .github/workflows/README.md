@@ -37,20 +37,6 @@ git push origin master
 # Результат: v1.0.0 → v1.0.1
 ```
 
-### Коммит без версионирования
-```bash
-git commit -m "docs: update readme [skip version]"
-git push origin master
-# Результат: версия не изменится
-```
-
-### Изменения только в документации (версия не изменится)
-```bash
-git commit -m "docs: update installation guide"
-git push origin master
-# Результат: версия не изменится (только .md файлы)
-```
-
 ### Примеры автоматического patch версионирования:
 ```bash
 # Исправление бага

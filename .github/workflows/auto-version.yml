@@ -26,29 +26,41 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
+          # Устанавливаем корректный remote URL
+          git remote set-url origin "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
+          # Сбрасываем все изменения, которые могли появиться при checkout
+          git reset --hard HEAD
+          git clean -fd
 
       - name: Check if version bump is needed
         id: check-version
         run: |
-          # Проверяем, есть ли изменения в коде (исключая документацию)
-          if git diff --name-only HEAD~1 | grep -v -E '\.(md|txt)$' | grep -v 'README' | grep -v '.gitignore' | grep -q .; then
-            # Проверяем, не содержит ли коммит флаг пропуска версионирования
+          # Получаем список измененных файлов (исключая документацию)
+          changed_files=$(git diff --name-only HEAD~1 | grep -v -E '\.(md|txt)$' | grep -v 'README' | grep -v '.gitignore')
+          
+          if [ -z "$changed_files" ]; then
+            echo "need_version=false" >> $GITHUB_OUTPUT
+            echo "No code changes detected, skipping version bump"
+          else
+            # Проверяем commit message
             COMMIT_MSG=$(git log -1 --pretty=format:"%s")
             if echo "$COMMIT_MSG" | grep -q "\[skip version\]"; then
               echo "need_version=false" >> $GITHUB_OUTPUT
               echo "Version bump skipped by commit message"
             else
               echo "need_version=true" >> $GITHUB_OUTPUT
-              echo "Changes detected, version bump needed"
+              echo "Changes detected in files: $changed_files"
+              echo "Version bump needed"
             fi
-          else
-            echo "need_version=false" >> $GITHUB_OUTPUT
-            echo "No code changes detected, skipping version bump"
           fi
 
-      - name: Run version script (patch increment)
+      - name: Run version script
         if: steps.check-version.outputs.need_version == 'true'
         run: |
+          # Сбрасываем возможные изменения перед выполнением
+          git reset --hard HEAD
+          git clean -fd
+          
           chmod +x ./scripts/version.sh
           ./scripts/version.sh patch
 
@@ -56,4 +68,4 @@ jobs:
         if: steps.check-version.outputs.need_version == 'true'
         run: |
           git fetch --tags
-          git tag -l | tail -5 
+          git tag -l | tail -5

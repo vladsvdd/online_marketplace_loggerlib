@@ -193,6 +193,50 @@ const (
 	KeyLocationError                      = "location_error"
 	KeyQueryTooShort                      = "query_too_short"
 	KeySearchResult                       = "search_result"
+
+	// Дополнительные константы для строковых ключей
+	KeyNoFilesInForm                            = "no_files_in_form"
+	KeyDirectoryCreationError                   = "directory_creation_error"
+	KeyDiskSpaceInsufficient                    = "disk_space_insufficient"
+	KeyFileOpenError                            = "file_open_error"
+	KeyFileDeletionError                        = "file_deletion_error"
+	KeyDiskSpaceCheckError                      = "disk_space_check_error"
+	KeyDiskSpaceInsufficientDetailed            = "disk_space_insufficient_detailed"
+	KeyFilesystemStatsError                     = "filesystem_stats_error"
+	KeyInvalidPathError                         = "invalid_path_error"
+	KeyDiskInfoError                            = "disk_info_error"
+	KeyLocationGetError                         = "location_get_error"
+	KeySiteCategoryGetError                     = "site_category_get_error"
+	KeyQuickAnnouncementIDShouldNotBeNil        = "quick_announcement_id_should_not_be_nil"
+	KeyQuickAnnouncementRespondIDShouldNotBeNil = "quick_announcement_respond_id_should_not_be_nil"
+	KeyQuickAnnouncementRequestIsNil            = "quick_announcement_request_is_nil"
+	KeyQuickAnnouncementRespondRequestIsNil     = "quick_announcement_respond_request_is_nil"
+	KeyUUIDGenerationError                      = "uuid_generation_error"
+	KeyTxIsNil                                  = "tx_is_nil"
+	KeyFilterQueryIsNil                         = "filter_query_is_nil"
+	KeyIDParameterIsRequired                    = "id_parameter_is_required"
+	KeyRealty                                   = "realty"
+	KeyUserRoleSetFailed                        = "user_role_set_failed"
+	KeyPasswordUpdateError                      = "password_update_error"
+	KeyTransactionCommitError                   = "transaction_commit_error"
+	KeyUserSearchError                          = "user_search_error"
+	KeyUserRolesPermissionsError                = "user_roles_permissions_error"
+	KeyItemTypeIDRequired                       = "item_type_id_required"
+	KeyUsernameAlreadyRegistered                = "username_already_registered"
+	KeyCategoryNameError                        = "category_name_error"
+	KeyUserRegistrationFailed                   = "user_registration_failed"
+	KeyActivationCodeNotFound                   = "activation_code_not_found"
+	KeyOfferingIDRequired                       = "offering_id_required"
+	KeyEmailConfirmationError                   = "email_confirmation_error"
+	KeyEmailValidationError                     = "email_validation_error"
+	KeyTransactionCreationError                 = "transaction_creation_error"
+	KeyUserFilterError                          = "user_filter_error"
+	KeyEmailAlreadyRegistered                   = "email_already_registered"
+	KeyInvalidActivationCode                    = "invalid_activation_code"
+	KeyOfferings                                = "offerings"
+	KeyLocations                                = "locations"
+	KeySiteCategories                           = "site_categories"
+	KeySettings                                 = "settings"
 )
 
 var (
@@ -830,6 +874,176 @@ var (
 		KeyTokenClaimsError: {
 			EN: "Token claims are not of type *tokenClaims",
 			RU: "Токен не является типом *tokenClaims",
+		},
+
+		// Дополнительные переводы для строковых ключей
+		KeyNoFilesInForm: {
+			EN: "No files in form",
+			RU: "Нет файлов в форме",
+		},
+		KeyDirectoryCreationError: {
+			EN: "Directory creation error",
+			RU: "Ошибка создания директории",
+		},
+		KeyDiskSpaceInsufficient: {
+			EN: "Insufficient disk space",
+			RU: "Недостаточно места на диске",
+		},
+		KeyFileOpenError: {
+			EN: "File open error",
+			RU: "Ошибка открытия файла",
+		},
+		KeyFileDeletionError: {
+			EN: "File deletion error",
+			RU: "Ошибка удаления файла",
+		},
+		KeyDiskSpaceCheckError: {
+			EN: "Disk space check error",
+			RU: "Ошибка проверки места на диске",
+		},
+		KeyDiskSpaceInsufficientDetailed: {
+			EN: "Insufficient disk space for operation",
+			RU: "Недостаточно места на диске для операции",
+		},
+		KeyFilesystemStatsError: {
+			EN: "Filesystem stats error",
+			RU: "Ошибка статистики файловой системы",
+		},
+		KeyInvalidPathError: {
+			EN: "Invalid path error",
+			RU: "Ошибка неверного пути",
+		},
+		KeyDiskInfoError: {
+			EN: "Disk info error",
+			RU: "Ошибка информации о диске",
+		},
+		KeyLocationGetError: {
+			EN: "Location get error",
+			RU: "Ошибка получения местоположения",
+		},
+		KeySiteCategoryGetError: {
+			EN: "Site category get error",
+			RU: "Ошибка получения категории сайта",
+		},
+		KeyQuickAnnouncementIDShouldNotBeNil: {
+			EN: "Quick announcement ID should not be nil",
+			RU: "ID быстрого объявления не должен быть пустым",
+		},
+		KeyQuickAnnouncementRespondIDShouldNotBeNil: {
+			EN: "Quick announcement respond ID should not be nil",
+			RU: "ID ответа на быстрое объявление не должен быть пустым",
+		},
+		KeyQuickAnnouncementRequestIsNil: {
+			EN: "Quick announcement request is nil",
+			RU: "Запрос быстрого объявления пустой",
+		},
+		KeyQuickAnnouncementRespondRequestIsNil: {
+			EN: "Quick announcement respond request is nil",
+			RU: "Запрос ответа на быстрое объявление пустой",
+		},
+		KeyUUIDGenerationError: {
+			EN: "UUID generation error",
+			RU: "Ошибка генерации UUID",
+		},
+		KeyTxIsNil: {
+			EN: "Transaction is nil",
+			RU: "Транзакция пустая",
+		},
+		KeyFilterQueryIsNil: {
+			EN: "Filter query is nil",
+			RU: "Запрос фильтра пустой",
+		},
+		KeyIDParameterIsRequired: {
+			EN: "ID parameter is required",
+			RU: "Параметр ID обязателен",
+		},
+		KeyRealty: {
+			EN: "Realty",
+			RU: "Недвижимость",
+		},
+		KeyUserRoleSetFailed: {
+			EN: "User role set failed",
+			RU: "Не удалось установить роль пользователя",
+		},
+		KeyPasswordUpdateError: {
+			EN: "Password update error",
+			RU: "Ошибка обновления пароля",
+		},
+		KeyTransactionCommitError: {
+			EN: "Transaction commit error",
+			RU: "Ошибка фиксации транзакции",
+		},
+		KeyUserSearchError: {
+			EN: "User search error",
+			RU: "Ошибка поиска пользователя",
+		},
+		KeyUserRolesPermissionsError: {
+			EN: "User roles permissions error",
+			RU: "Ошибка прав ролей пользователя",
+		},
+		KeyItemTypeIDRequired: {
+			EN: "Item type ID is required",
+			RU: "ID типа элемента обязателен",
+		},
+		KeyUsernameAlreadyRegistered: {
+			EN: "Username already registered",
+			RU: "Имя пользователя уже зарегистрировано",
+		},
+		KeyCategoryNameError: {
+			EN: "Category name error",
+			RU: "Ошибка названия категории",
+		},
+		KeyUserRegistrationFailed: {
+			EN: "User registration failed",
+			RU: "Регистрация пользователя не удалась",
+		},
+		KeyActivationCodeNotFound: {
+			EN: "Activation code not found",
+			RU: "Код активации не найден",
+		},
+		KeyOfferingIDRequired: {
+			EN: "Offering ID is required",
+			RU: "ID предложения обязателен",
+		},
+		KeyEmailConfirmationError: {
+			EN: "Email confirmation error",
+			RU: "Ошибка подтверждения email",
+		},
+		KeyEmailValidationError: {
+			EN: "Email validation error",
+			RU: "Ошибка валидации email",
+		},
+		KeyTransactionCreationError: {
+			EN: "Transaction creation error",
+			RU: "Ошибка создания транзакции",
+		},
+		KeyUserFilterError: {
+			EN: "User filter error",
+			RU: "Ошибка фильтра пользователя",
+		},
+		KeyEmailAlreadyRegistered: {
+			EN: "Email already registered",
+			RU: "Email уже зарегистрирован",
+		},
+		KeyInvalidActivationCode: {
+			EN: "Invalid activation code",
+			RU: "Неверный код активации",
+		},
+		KeyOfferings: {
+			EN: "Offerings",
+			RU: "Предложения",
+		},
+		KeyLocations: {
+			EN: "Locations",
+			RU: "Местоположения",
+		},
+		KeySiteCategories: {
+			EN: "Site categories",
+			RU: "Категории сайта",
+		},
+		KeySettings: {
+			EN: "Settings",
+			RU: "Настройки",
 		},
 	}
 	mu sync.RWMutex

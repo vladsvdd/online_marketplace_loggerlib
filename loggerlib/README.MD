@@ -14,6 +14,8 @@ formate_error.go - Форматирование ошибок
 
 logger.go - Основная реализация логгера
 
+http_logger.go - Универсальное логирование HTTP-запросов к внешним API
+
 Example interface
 ```
 type Logger interface {

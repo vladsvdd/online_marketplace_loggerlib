@@ -47,7 +47,7 @@ func (s *Logger) LogHTTPRequest(ctx context.Context, req HTTPRequestLog) {
 		attrs = append(attrs, "error", req.Error)
 	}
 
-	msg := fmt.Sprintf("[%s] API request details", req.Service)
+	msg := fmt.Sprintf("[%s] API request details ", req.Service)
 	s.With(attrs...).Info(ctx, msg)
 }
 
